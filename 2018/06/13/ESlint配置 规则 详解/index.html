@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="余显文的个人博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="由于平时工作会用到一些，放在这里方便查询 #解析器选项（parserOptions）12345678910&quot;parserOptions&quot;: &amp;#123;     &quot;ecmaVersion&quot;: 6,          //ES的版本，默认为5     &quot;sourceType&quot;: &quot;module&quot;,    //指定源代码存在的位置，script | module，默认为script。     &quot;ecm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="余显文的个人博客">
+<meta property="og:url" content="https://yuxianwen.github.io/2018/06/13/ESlint配置 规则 详解/index.html">
+<meta property="og:site_name" content="余显文的个人博客">
+<meta property="og:description" content="由于平时工作会用到一些，放在这里方便查询 #解析器选项（parserOptions）12345678910&quot;parserOptions&quot;: &amp;#123;     &quot;ecmaVersion&quot;: 6,          //ES的版本，默认为5     &quot;sourceType&quot;: &quot;module&quot;,    //指定源代码存在的位置，script | module，默认为script。     &quot;ecm">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-14T11:00:07.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="余显文的个人博客">
+<meta name="twitter:description" content="由于平时工作会用到一些，放在这里方便查询 #解析器选项（parserOptions）12345678910&quot;parserOptions&quot;: &amp;#123;     &quot;ecmaVersion&quot;: 6,          //ES的版本，默认为5     &quot;sourceType&quot;: &quot;module&quot;,    //指定源代码存在的位置，script | module，默认为script。     &quot;ecm">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'TXYNR2CL67',
+      apiKey: '38f8abee91b3dd75e24cd9db584d4c09',
+      indexName: 'github_hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yuxianwen.github.io/2018/06/13/ESlint配置 规则 详解/"/>
+
+
+
+
+
+  <title> | 余显文的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?01234567890ABCDEF01234567890ABCDEF";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余显文的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuxianwen.github.io/2018/06/13/ESlint配置 规则 详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="余显文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余显文的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T23:45:25+08:00">
+                2018-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/13/ESlint配置 规则 详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/06/13/ESlint配置 规则 详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/13/ESlint配置 规则 详解/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>由于平时工作会用到一些，放在这里方便查询</p>
+<p>#解析器选项（parserOptions）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">"parserOptions": &#123;</span><br><span class="line">     "ecmaVersion": 6,          //ES的版本，默认为5</span><br><span class="line">     "sourceType": "module",    //指定源代码存在的位置，script | module，默认为script。</span><br><span class="line">     "ecmaFeatures": &#123;          //指定要使用其他那些语言对象</span><br><span class="line">         "experimentalObjectRestSpread": true,//启用对对象的扩展</span><br><span class="line">         "jsx": true,                       //启用jsx语法</span><br><span class="line">         "globalReturn":true,               //允许return在全局使用</span><br><span class="line">         "impliedStrict":true               //启用严格校验模式</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#解析器（parser）<br>默认情况下ESLint使用Espree解析器，这里我们可以修改它的默认设置。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"parser": "babel-eslint"</span><br></pre></td></tr></table></figure></p>
+<p>环境配置（env）<br>默认情况下，所有环境变量都为false，且这些环境并不冲突，可以自由选择搭配。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"env"</span>&#123;</span><br><span class="line">  "browser":true,               //启用浏览器全局变量。</span><br><span class="line">  "node":true,                  //Node.js全局变量和Node.js范围。</span><br><span class="line">  "commonjs":true,              //CommonJS全局变量和CommonJS范围。</span><br><span class="line">  "shared-node-browser":true,  //Node和Browser共同的全局。</span><br><span class="line">  "es6" :true,                      // 启用ES6的功能。</span><br><span class="line"> "worker" :true ,                   //网络工作者全局变量。</span><br><span class="line">  "amd" :true,                      //根据amd规范定义require()和define()作为全局变量。</span><br><span class="line">  "mocha":true,                         //添加所有的摩卡测试全局变量。</span><br><span class="line">  "jasmine":true,                       //添加1.3和2.0版本的所有Jasmine测试全局变量。</span><br><span class="line">  "jest":true,                          //Jest全局变量。</span><br><span class="line">  "phantomjs":true,                     //PhantomJS全局变量。</span><br><span class="line">  "protractor":true,                    //量角器全局变量。</span><br><span class="line">  "qunit":true,                         // QUnit全局变量。</span><br><span class="line">  "jquery":true,                        //jQuery全局变量。</span><br><span class="line">  "prototypejs":true,                   //Prototype.js全局变量。</span><br><span class="line">  "shelljs":true,                       //ShellJS全局变量。</span><br><span class="line">  "meteor":true,                        //流星全球变量。</span><br><span class="line">  "mongo":true,                         // MongoDB全局变量。</span><br><span class="line">  "applescript":true,                   //AppleScript全局变量。</span><br><span class="line">  "nashorn":true,                       // Java 8 Nashorn全局变量。</span><br><span class="line">  "serviceworker":true,                 // 服务工作者全局变量。</span><br><span class="line">  "atomtest":true,                      // Atom测试助手全局变量</span><br><span class="line">  "embertest":true,                     // Ember测试助手全局变量。</span><br><span class="line">  "webextensions":true,                 // WebExtensions全局变量</span><br><span class="line">  "greasemonkey":true                   // GreaseMonkey全局变量</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#插件（plugins）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"plugins": [</span><br><span class="line">        "standard",</span><br><span class="line">        "promise",</span><br><span class="line">        <span class="string">"react"</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
+<p>#全局变量（globals）<br>指定全局变量的值为true|false。true表示变量可以被覆盖，false表示不允许被覆盖。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"globals": &#123;</span><br><span class="line">        "document": true,</span><br><span class="line">        "navigator": true,</span><br><span class="line">        "window": true,</span><br><span class="line">        "think": true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#自定义规则（settings）<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        <span class="attr">"sharedData"</span>: <span class="string">"Hello"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#禁用持续查找（root）<br>默认情况下，ESLint将在根目录下的所有父文件夹中查找配置文件。该属性的作用是一旦发现了配置文件就停止对父文件夹的查找。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"root"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#共享配置（extends）<br>该属性可以是eslint命令，也可以是继承文件的路径。</p>
+<p>eslint:all:表示引入当前版本eslint的所有核心规则。</p>
+<p>eslint:recommended:表示引入eslint的核心功能，并且报告一些常见的共同错误。</p>
+<p>如果值为绝对或相对路径则相当于导入路径对应的规则配置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  extends: <span class="string">'eslint:recommended'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">      extends: <span class="string">'./public-eslintrc.js'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>#校验规则（rules）<br>Eslint附带了大量的校验规则，这些规则的值分别有如下规律：</p>
+<p>off | 0 :表示关闭规则。<br>warn | 1 :表示将该规则转换为警告。<br>error | 2 :表示将该规则转换为错误。<br>具体的规则请查看： <a href="https://eslint.org/docs/rules/" target="_blank" rel="noopener">https://eslint.org/docs/rules/</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br></pre></td><td class="code"><pre><span class="line"> "rules": &#123;</span><br><span class="line">        //在定义对象的时候，getter/setter需要同时出现</span><br><span class="line">        "accessor-pairs": 2,</span><br><span class="line">        // 箭头函数中，在需要的时候，在参数外使用小括号（只有一个参数时，可以不适用括号，其它情况下都需要使用括号）</span><br><span class="line">        "arrow-parens": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"as-needed"</span></span><br><span class="line">        ],</span><br><span class="line">        //箭头函数中的箭头前后需要留空格</span><br><span class="line">        "arrow-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"before"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"after"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //该条规则主要用于定义数组字面量定义数组时，前后是否加空格，接受两个可选配置，always 和never .</span><br><span class="line">        //如果设置为always 那么就应该在在写数组是前后都留空格</span><br><span class="line">        "array-bracket-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"never"</span></span><br><span class="line">        ],</span><br><span class="line">        //如果代码块是单行的时候，代码块内部前后需要留一个空格</span><br><span class="line">        "block-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"always"</span></span><br><span class="line">        ],</span><br><span class="line">        //大括号语法采用『1tbs』,允许单行样式</span><br><span class="line">        "brace-style": [</span><br><span class="line">            2,</span><br><span class="line">            "1tbs",</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"allowSingleLine"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        /**</span><br><span class="line">         *该规则会搜索代码中所有的下划线，它会忽略变量名开始和结尾的下划线而只检测变量中间的下划线。</span><br><span class="line">         *如果ESLint认为一个变量是常量（所有字母大写），那么在变量名字母之间添加下划线也是可以而不会报错的。</span><br><span class="line">         *该规则只检测生命和定义时的变量而不检测函数调用时的函数名。</span><br><span class="line">         **/</span><br><span class="line">        "camelcase": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"properties"</span>: <span class="string">"never"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //在定义对象或数组时，最后一项不能加逗号</span><br><span class="line">        "comma-dangle": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"never"</span></span><br><span class="line">        ],</span><br><span class="line">        //在写逗号时，逗号前面不需要加空格，而逗号后面需要添加空格</span><br><span class="line">        "comma-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"before"</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">"after"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //如果逗号可以放在行首或行尾时，那么请放在行尾</span><br><span class="line">        "comma-style": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"last"</span></span><br><span class="line">        ],</span><br><span class="line">        //在constructor函数中，如果classes是继承其他class，那么请使用super。否者不使用super</span><br><span class="line">        "constructor-super": 2,</span><br><span class="line">        //在if-else语句中，如果if或else语句后面是多行，那么必须加大括号。如果是单行就应该省略大括号。</span><br><span class="line">        "curly": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"multi-line"</span></span><br><span class="line">        ],</span><br><span class="line">        //该规则规定了.应该放置的位置，</span><br><span class="line">        "dot-location": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"property"</span></span><br><span class="line">        ],</span><br><span class="line">        //使用=== !== 代替== != .</span><br><span class="line">        "eqeqeq": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"allow-null"</span></span><br><span class="line">        ],</span><br><span class="line">        //该规则规定了generator函数中星号两边的空白。</span><br><span class="line">        "generator-star-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"before"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"after"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        // 规定callback 如果有err参数，只能写出err 或者 error .</span><br><span class="line">        "handle-callback-err": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"^(err|error)$"</span></span><br><span class="line">        ],</span><br><span class="line">        //这个就是关于用什么来缩进了，4个空格=两个tab .</span><br><span class="line">        "indent": [</span><br><span class="line">            1,</span><br><span class="line">            <span class="number">2</span></span><br><span class="line">        ],</span><br><span class="line">        // keyword 前后需要空格</span><br><span class="line">        "keyword-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"before"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"after"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"overrides"</span>: &#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //该规则规定了在对象字面量语法中，key和value之间的空白，冒号前不要空格，冒号后面需要一个空格</span><br><span class="line">        "key-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"beforeColon"</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">"afterColon"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //构造函数首字母大写</span><br><span class="line">        "new-cap": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"newIsCap"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"capIsNew"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //在使用构造函数时候，函数调用的圆括号不能够省略</span><br><span class="line">        "new-parens": 2,</span><br><span class="line">        //禁止使用Array构造函数</span><br><span class="line">        "no-array-constructor": 2,</span><br><span class="line">        //禁止使用arguments.caller和arguments.callee</span><br><span class="line">        "no-caller": 2,</span><br><span class="line">        //禁止覆盖class命名，也就是说变量名不要和class名重名</span><br><span class="line">        "no-class-assign": 2,</span><br><span class="line">        //禁止在case/default语句中使用lexical declarations，例如let, const, function and class .因为在case/default中的声明，</span><br><span class="line">        //在整个switch语句中都能够访问到，如果实在需要声明变量，可以加大括号。</span><br><span class="line">        "no-case-declarations": 2,</span><br><span class="line">        //在条件语句中不要使用赋值语句</span><br><span class="line">        "no-cond-assign": 2,</span><br><span class="line">        //const申明的变量禁止修改</span><br><span class="line">        "no-const-assign": 2,</span><br><span class="line">        //在正则表达式中禁止使用控制符（详见官网）</span><br><span class="line">        "no-control-regex": 2,</span><br><span class="line">        //禁止使用debugger语句</span><br><span class="line">        "no-debugger": 2,</span><br><span class="line">        //禁止使用delete删除var申明的变量</span><br><span class="line">        "no-delete-var": 2,</span><br><span class="line">        //函数参数禁止重名</span><br><span class="line">        "no-dupe-args": 2,</span><br><span class="line">        //class中的成员禁止重名</span><br><span class="line">        "no-dupe-class-members": 2,</span><br><span class="line">        //在对象字面量中，禁止使用重复的key</span><br><span class="line">        "no-dupe-keys": 2,</span><br><span class="line">        //在switch语句中禁止重复的case</span><br><span class="line">        "no-duplicate-case": 2,</span><br><span class="line">        //禁止使用不匹配任何字符串的正则表达式</span><br><span class="line">        "no-empty-character-class": 2,</span><br><span class="line">        //禁止使用eval函数</span><br><span class="line">        "no-eval": 2,</span><br><span class="line">        //禁止对catch语句中的参数进行赋值</span><br><span class="line">        "no-ex-assign": 2,</span><br><span class="line">        //禁止扩展原生对象</span><br><span class="line">        "no-extend-native": 2,</span><br><span class="line">        //禁止在不必要的时候使用bind函数</span><br><span class="line">        "no-extra-bind": 2,</span><br><span class="line">        //在一个本来就会自动转化为布尔值的上下文中就没必要再使用!! 进行强制转化了。</span><br><span class="line">        "no-extra-boolean-cast": 2,</span><br><span class="line">        //禁止使用多余的圆括号</span><br><span class="line">        "no-extra-parens": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"functions"</span></span><br><span class="line">        ],</span><br><span class="line">        //这条规则，简单来说就是在case语句中尽量加break，避免不必要的fallthrough错误，如果需要fall through，那么看官网。</span><br><span class="line">        "no-fallthrough": 2,</span><br><span class="line">        //简单来说不要写这样的数字.2 2.。应该写全，2.2 2.0 .</span><br><span class="line">        "no-floating-decimal": 2,</span><br><span class="line">        //禁止对函数名重新赋值</span><br><span class="line">        "no-func-assign": 2,</span><br><span class="line">        //禁止使用类eval的函数。</span><br><span class="line">        "no-implied-eval": 2,</span><br><span class="line">        //消除简写的类型转换，而推荐使用一种更加「自解释」的转换方法</span><br><span class="line">        "no-implicit-coercion": 2,</span><br><span class="line">        //禁止在代码块中定义函数（下面的规则仅限制函数）</span><br><span class="line">        "no-inner-declarations": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"functions"</span></span><br><span class="line">        ],</span><br><span class="line">        //RegExp构造函数中禁止使用非法正则语句</span><br><span class="line">        "no-invalid-regexp": 2,</span><br><span class="line">        //在严格模式下，在classes或者classes-like对象外部使用this关键词this将被视为undefined 并且抛出TypeError错误。</span><br><span class="line">        "no-invalid-this": 2,</span><br><span class="line">        //禁止使用不规则的空白符</span><br><span class="line">        "no-irregular-whitespace": 2,</span><br><span class="line">        //禁止使用__iterator__属性</span><br><span class="line">        "no-iterator": 2,</span><br><span class="line">        //label和var申明的变量不能重名</span><br><span class="line">        "no-label-var": 2,</span><br><span class="line">        //禁止使用label语句</span><br><span class="line">        "no-labels": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"allowLoop"</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">"allowSwitch"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //禁止使用没有必要的嵌套代码块</span><br><span class="line">        "no-lone-blocks": 2,</span><br><span class="line">        //不要把空格和tab混用</span><br><span class="line">        "no-mixed-spaces-and-tabs": 2,</span><br><span class="line">        //顾名思义，该规则保证了在逻辑表达式、条件表达式、</span><br><span class="line">        //申明语句、数组元素、对象属性、sequences、函数参数中不使用超过一个的空白符。</span><br><span class="line">        "no-multi-spaces": 2,</span><br><span class="line">        //该规则保证了字符串不分两行书写。</span><br><span class="line">        "no-multi-str": 2,</span><br><span class="line">        //空行不能够超过2行</span><br><span class="line">        "no-multiple-empty-lines": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"max"</span>: <span class="number">2</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //该规则保证了不重写原生对象。</span><br><span class="line">        "no-native-reassign": 2,</span><br><span class="line">        //在in操作符左边的操作项不能用! 例如这样写不对的：if ( !a in b) &#123; //dosomething &#125;</span><br><span class="line">        "no-negated-in-lhs": 2,</span><br><span class="line">        //当我们使用new操作符去调用构造函数时，需要把调用结果赋值给一个变量。</span><br><span class="line">        "no-new": 2,</span><br><span class="line">        //该规则保证了不使用new Function(); 语句。</span><br><span class="line">        "no-new-func": 2,</span><br><span class="line">        //不要通过new Object（），来定义对象</span><br><span class="line">        "no-new-object": 2,</span><br><span class="line">        //禁止把require方法和new操作符一起使用。</span><br><span class="line">        "no-new-require": 2,</span><br><span class="line">        //当定义字符串、数字、布尔值就不要使用构造函数了，String、Number、Boolean</span><br><span class="line">        "no-new-wrappers": 2,</span><br><span class="line">        //禁止无意得把全局对象当函数调用了，比如下面写法错误的：Math(), JSON()</span><br><span class="line">        "no-obj-calls": 2,</span><br><span class="line">        //不要使用八进制的语法。</span><br><span class="line">        "no-octal": 2,</span><br><span class="line">        //用的少，见官网。http://eslint.org/docs/rules/</span><br><span class="line">        "no-octal-escape": 2,</span><br><span class="line">        //不要使用__proto__</span><br><span class="line">        "no-proto": 2,</span><br><span class="line">        //不要重复申明一个变量</span><br><span class="line">        "no-redeclare": 2,</span><br><span class="line">        //正则表达式中不要使用空格</span><br><span class="line">        "no-regex-spaces": 2,</span><br><span class="line">        //return语句中不要写赋值语句</span><br><span class="line">        "no-return-assign": 2,</span><br><span class="line">        //不要和自身作比较</span><br><span class="line">        "no-self-compare": 2,</span><br><span class="line">        //不要使用逗号操作符，详见官网</span><br><span class="line">        "no-sequences": 2,</span><br><span class="line">        //禁止对一些关键字或者保留字进行赋值操作，比如NaN、Infinity、undefined、eval、arguments等。</span><br><span class="line">        "no-shadow-restricted-names": 2,</span><br><span class="line">        //函数调用时，圆括号前面不能有空格</span><br><span class="line">        "no-spaced-func": 2,</span><br><span class="line">        //禁止使用稀疏数组</span><br><span class="line">        "no-sparse-arrays": 2,</span><br><span class="line">        //在调用super之前不能使用this对象</span><br><span class="line">        "no-this-before-super": 2,</span><br><span class="line">        //严格限制了抛出错误的类型，简单来说只能够抛出Error生成的错误。但是这条规则并不能够保证你只能够</span><br><span class="line">        //抛出Error错误。详细见官网</span><br><span class="line">        "no-throw-literal": 2,</span><br><span class="line">        //行末禁止加空格</span><br><span class="line">        "no-trailing-spaces": 2,</span><br><span class="line">        //禁止使用没有定义的变量，除非在／＊global＊／已经申明</span><br><span class="line">        "no-undef": 2,</span><br><span class="line">        //禁止把undefined赋值给一个变量</span><br><span class="line">        "no-undef-init": 2,</span><br><span class="line">        //禁止在不需要分行的时候使用了分行</span><br><span class="line">        "no-unexpected-multiline": 2,</span><br><span class="line">        //禁止使用没有必要的三元操作符，因为用些三元操作符可以使用其他语句替换</span><br><span class="line">        "no-unneeded-ternary": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"defaultAssignment"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //没有执行不到的代码</span><br><span class="line">        "no-unreachable": 2,</span><br><span class="line">        //没有定义了没有被使用到的变量</span><br><span class="line">        "no-unused-vars": [</span><br><span class="line">            0,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"vars"</span>: <span class="string">"all"</span>,</span><br><span class="line">                <span class="attr">"args"</span>: <span class="string">"none"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //禁止在不需要使用call（）或者apply（）的时候使用了这两个方法</span><br><span class="line">        "no-useless-call": 2,</span><br><span class="line">        //不要使用with语句</span><br><span class="line">        "no-with": 2,</span><br><span class="line">        //在某些场景只能使用一个var来申明变量</span><br><span class="line">        "one-var": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"initialized"</span>: <span class="string">"never"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //在进行断行时，操作符应该放在行首还是行尾。并且还可以对某些操作符进行重写。</span><br><span class="line">        "operator-linebreak": [</span><br><span class="line">            2,</span><br><span class="line">            "after",</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"overrides"</span>: &#123;</span><br><span class="line">                    <span class="attr">"?"</span>: <span class="string">"before"</span>,</span><br><span class="line">                    <span class="attr">":"</span>: <span class="string">"before"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //使用单引号</span><br><span class="line">        "quotes": [</span><br><span class="line">            1,</span><br><span class="line">            "single",</span><br><span class="line">            <span class="string">"avoid-escape"</span></span><br><span class="line">        ],</span><br><span class="line">        //在使用parseInt() 方法时，需要传递第二个参数，来帮助解析，告诉方法解析成多少进制。</span><br><span class="line">        "radix": 2,</span><br><span class="line">        //这就是分号党和非分号党关心的了，我们还是选择加分号</span><br><span class="line">        "semi": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"always"</span></span><br><span class="line">        ],</span><br><span class="line">        //该规则规定了分号前后的空格，具体规定如下。</span><br><span class="line">        "semi-spacing": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"before"</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">"after"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //代码块前面需要加空格</span><br><span class="line">        "space-before-blocks": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"always"</span></span><br><span class="line">        ],</span><br><span class="line">        //函数圆括号前面需要加空格</span><br><span class="line">        "space-before-function-paren": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"never"</span></span><br><span class="line">        ],</span><br><span class="line">        //圆括号内部不需要加空格</span><br><span class="line">        "space-in-parens": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"never"</span></span><br><span class="line">        ],</span><br><span class="line">        //操作符前后需要加空格</span><br><span class="line">        "space-infix-ops": 2,</span><br><span class="line">        //一元操作符前后是否需要加空格，单词类操作符需要加，而非单词类操作符不用加</span><br><span class="line">        "space-unary-ops": [</span><br><span class="line">            2,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"words"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"nonwords"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //评论符号｀／*｀ ｀／／｀，后面需要留一个空格</span><br><span class="line">        "spaced-comment": [</span><br><span class="line">            2,</span><br><span class="line">            "always",</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"markers"</span>: [</span><br><span class="line">                    <span class="string">"global"</span>,</span><br><span class="line">                    <span class="string">"globals"</span>,</span><br><span class="line">                    <span class="string">"eslint"</span>,</span><br><span class="line">                    <span class="string">"eslint-disable"</span>,</span><br><span class="line">                    <span class="string">"*package"</span>,</span><br><span class="line">                    <span class="string">"!"</span>,</span><br><span class="line">                    <span class="string">","</span></span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        //推荐使用isNaN方法，而不要直接和NaN作比较</span><br><span class="line">        "use-isnan": 2,</span><br><span class="line">        //在使用typeof操作符时，作比较的字符串必须是合法字符串eg:'string' 'object'</span><br><span class="line">        "valid-typeof": 2,</span><br><span class="line">        //立即执行函数需要用圆括号包围</span><br><span class="line">        "wrap-iife": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"any"</span></span><br><span class="line">        ],</span><br><span class="line">        //yoda条件语句就是字面量应该写在比较操作符的左边，而变量应该写在比较操作符的右边。</span><br><span class="line">        //而下面的规则要求，变量写在前面，字面量写在右边</span><br><span class="line">        "yoda": [</span><br><span class="line">            2,</span><br><span class="line">            <span class="string">"never"</span></span><br><span class="line">        ],</span><br><span class="line">        "require-yield": 0,</span><br><span class="line">        //react组件文件使用.jsx</span><br><span class="line">        "react/require-extension": [</span><br><span class="line">            1,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"extensions"</span>: [</span><br><span class="line">                    <span class="string">".jsx"</span></span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#忽略文件（.eslintignore）<br>该文件主要作用是配置哪些文件不需要进行eslint校验。</p>
+<p>package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"mypackage"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"eslintConfig"</span>: &#123;</span><br><span class="line">      <span class="attr">"env"</span>: &#123;</span><br><span class="line">          <span class="attr">"browser"</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">"node"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"eslintIgnore"</span>: [<span class="string">"hello.js"</span>, <span class="string">"world.js"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处配置忽略hello.js和world.js的校验。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/13/名片vCard格式参数详解/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="余显文" />
+            
+              <p class="site-author-name" itemprop="name">余显文</p>
+              <p class="site-description motion-element" itemprop="description">多抽出一分钟学习，让你的生命更加精彩！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuxianwen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yuxianwen163@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">余显文</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://yuxianwen.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yuxianwen.github.io/2018/06/13/ESlint配置 规则 详解/';
+          this.page.identifier = '2018/06/13/ESlint配置 规则 详解/';
+          this.page.title = '';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yuxianwen.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("iW7bn4E6zDewNnM24CsUK4fa-gzGzoHsz", "Qz9IM8yvWja0WgwmSvDVg6BS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
