@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yuxianwen.github.io/"/>
-  <updated>2018-06-13T15:45:25.319Z</updated>
+  <updated>2020-08-04T14:29:45.092Z</updated>
   <id>https://yuxianwen.github.io/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vueifty项目踩坑记录贴</title>
+    <link href="https://yuxianwen.github.io/2020/08/04/vueifty%E9%A1%B9%E7%9B%AE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95%E8%B4%B4/"/>
+    <id>https://yuxianwen.github.io/2020/08/04/vueifty项目踩坑记录贴/</id>
+    <published>2020-08-04T14:24:13.049Z</published>
+    <updated>2020-08-04T14:29:45.092Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近公司要开发新项目，对比ui库，最后还是选了vueitiy,里有许多不熟悉的东西，<br>随着工作的进展，慢慢浮现出来</p><h1 id="typescript问题"><a href="#typescript问题" class="headerlink" title="typescript问题"></a>typescript问题</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近公司要开发新项目，对比ui库，最后还是选了vueitiy,里有许多不熟悉的东西，&lt;br&gt;随着工作的进展，慢慢浮现出来&lt;/p&gt;
+&lt;h1 id=&quot;typescript问题&quot;&gt;&lt;a href=&quot;#typescript问题&quot; class=&quot;headerlink&quot; title=&quot;
+      
+    
+    </summary>
+    
+      <category term="web前端" scheme="https://yuxianwen.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://yuxianwen.github.io/categories/web%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="Vue" scheme="https://yuxianwen.github.io/tags/Vue/"/>
+    
+      <category term="vueitfy" scheme="https://yuxianwen.github.io/tags/vueitfy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>余显文测试文章发布</title>
+    <link href="https://yuxianwen.github.io/2019/04/28/2019-04-28%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/"/>
+    <id>https://yuxianwen.github.io/2019/04/28/2019-04-28面试总结/</id>
+    <published>2019-04-28T14:13:00.000Z</published>
+    <updated>2019-04-28T14:47:24.043Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="第一家公司"><a href="#第一家公司" class="headerlink" title="第一家公司"></a>第一家公司</h1><p>面试官是一名前端部门经理，偏管理的，所以问题不是很深入，问的都是以jquery库为基础的问题</p><ol><br>  <li><br>    <h3>如何实现一个表单的动态增加项和删减项？（jquery实现）</h3><br>    答：用<code>append</code>方法动态生成一条表单内容，<code>input</code>等元素存到一个变量里面<br>  </li><br>   <li><br>    <h3>如何去遍历这个一个table中的td元素？</h3><br>    答：<br>    $(‘#table tr’).each(function(){<br>      $(this)<br>      /// do somesing<br>    })<br>  </li><br>  <li><br>  <h3>提交复杂表单的数据格式是怎样的？</h3><br>  答： {<br>    name: ‘test’,<br>    sex: 1,<br>    children: [<br>      {name: ‘c1’, sex:2}<br>      …<br>    ]<br>  }<br>  </li><br>  1.js继承有哪几种方式<br>  2.js有哪几种数据类型<br>  3.js如何判断对象的数据类型<br>  4.typeof undefinde typeof null typeof {} typeof []<br>  5.如何准确的判断数据类型<br>  6.vue生命周期，都干了什么<br>  7.如何监听一个对象<br>  8.vue是用什么来监听数据变动的<br>  9.router钩子<br>  10.父子组件通信<br>  11.兄弟组件通信<br>  12.<br></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;第一家公司&quot;&gt;&lt;a href=&quot;#第一家公司&quot; class=&quot;headerlink&quot; title=&quot;第一家公司&quot;&gt;&lt;/a&gt;第一家公司&lt;/h1&gt;&lt;p&gt;面试官是一名前端部门经理，偏管理的，所以问题不是很深入，问的都是以jquery库为基础的问题&lt;/p&gt;
+&lt;ol&gt;&lt;br
+      
+    
+    </summary>
+    
+      <category term="web前端" scheme="https://yuxianwen.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Web前端" scheme="https://yuxianwen.github.io/tags/Web%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="面试" scheme="https://yuxianwen.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>vue中关于路由组件之间的通信</title>
